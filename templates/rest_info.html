@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<img src="{{desc.image.url}}" alt="" style="float:right;">
+<h2 style="text-decoration-color: rgb(222, 222, 38);">Hotel : {{desc.name}}</h2><br>
+<h2 style="text-decoration-color: yellow;">The description is : {{desc.description}}</h2>
+
+<table>
+    <tr>
+        <th colspan="2" style="text-align: center;">Menu</th>
+    </tr>
+    {% for n in menu %}
+    <tr>
+        <td>{{n.food}}</td>
+        <td>{{n.price}}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h3 style="text-align:center;">Comments : </h3>
+<div style="display: block;width:80%; border: 2px solid grey; border-radius:5px;margin:auto; padding:50px; box-shadow:6px 6px 10px 6px grey">
+    {% for c in com %}
+    <p style="text-align:center">{{c.comment}}</p>
+    <hr>
+    {% endfor %}
+</div>
+
+<form action="add_comment" method="post" style="display: flex;justify-content:space-around; margin-top:50px !important; margin-bottom:50px !important; width:70%; margin:auto; padding: 40px;">
+    {% csrf_token %}
+    <input type="text" name="comment" id="comment" placeholder="Add Comment....">
+    <input type="text" name="hname" id="hname" placeholder="Hotel Name...">
+    <input type="submit">
+</form>
+{% endblock %}

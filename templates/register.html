@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1 style="text-align: center;margin-top:50px;margin-bottom:50px;">Register</h1>
+{% if error %}
+<h3 style="color: red; text-align:center;">{{message}}</h3>
+{% else %}
+<h3 style="color: green; text-align:center;">{{message}}</h3>
+{% endif %}
+
+<form action="register" method="POST">
+    {% csrf_token %}
+    <!--Email ID-->
+    <div class="form-group" style="width: 70%; margin:auto; margin-top:50px; margin-bottom:50px;">
+        <label for="email">Email address</label>
+        <input type="email" class="form-control" id="email" name="email"
+            placeholder="Enter email" required>
+    </div>
+
+    <!--Username-->
+    <div class="form-group" style="width: 70%; margin:auto; margin-top:50px; margin-bottom:50px;">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" id="username" name="username"
+            placeholder="Username" required>
+    </div>
+
+    <!--Create Password-->
+    <div class="form-group" style="width: 70%; margin:auto; margin-top:50px; margin-bottom:50px;">
+        <label for="pwd1">Create Password</label>
+        <input type="password" class="form-control" id="pwd1" name="pwd1" placeholder="Create Password" required>
+    </div>
+
+    <!--Confirm Password-->
+    <div class="form-group" style="width: 70%; margin:auto; margin-top:50px; margin-bottom:50px;">
+        <label for="pwd2">Confirm Password</label>
+        <input type="password" class="form-control" id="pwd2" name="pwd2" placeholder="Confirm Password" required>
+    </div>
+
+    <!--Submit button-->
+    <div style="text-align: center;margin-top:50px;margin-bottom:50px;">
+        <button type="submit" class="btn btn-primary">Register</button>
+    </div>
+</form>
+
+<!--Redirect to login form-->
+<form action="login_form">
+    <div style="display: flex; justify-content:space-around;">
+        <div>
+            <p style="color: red;font-family: 'Ubuntu', sans-serif; text-align:center; display:inline;">Already
+                registered?</p>
+            <button type="submit" class="btn btn-danger"
+                style="display: inline; margin:auto; margin-top:50px; margin-bottom:50px;">Login</button>
+        </div>
+    </div>
+</form>
+
+{% endblock %}

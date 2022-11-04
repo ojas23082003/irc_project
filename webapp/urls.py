@@ -1,22 +1,20 @@
 from django.urls import path
 from . import views
 urlpatterns = [
-    path('', views.home),
-    path('product-detail/', views.product_detail, name='product-detail'),
-    path('cart/', views.add_to_cart, name='add-to-cart'),
-    path('buy/', views.buy_now, name='buy-now'),
-    path('profile/', views.profile, name='profile'),
-    path('address/', views.address, name='address'),
-    path('orders/', views.orders, name='orders'),
-    path('changepassword/', views.change_password, name='changepassword'),
-    path('mobile/', views.mobile, name='mobile'),
-    path('login/', views.login, name='login'),
-    path('logout/', views.logout, name='logout'),
-    path('registration/', views.customerregistration, name='customerregistration'),
-    path('login/abc', views.abc, name='abc'),
-    path('cart/abc', views.abc, name='abc'),
-    path('checkout/', views.checkout, name='checkout'),
-    path('remove/', views.remove, name='remove'),
-    path('registration/register', views.register, name='register'),
-    path('registration/abc', views.abc, name='abc'),
+    path('', views.home, name='home'),
+    path('register_form/', views.register_form, name='register_form'),
+    path('register_form/login_form', views.login_form, name='login_form'),
+    path('register_form/register_form', views.register_form, name='register_form'),
+    path('register_form/register', views.register, name='register'),
+    path('login_form/', views.login_form, name='login_form'),
+    path('login_form/login_form', views.login_form, name='login_form'),
+    path('login_form/register_form', views.register_form, name='register_form'),
+    path('login_form/loginuser', views.loginuser, name='loginuser'),
+    path('login_form/register', views.register, name='register'),
+    path('restaurant/<str:slug>/<str:name>', views.restaurant, name='restaurant'),
+    path('register/', views.register, name='register'),
+    path('loginuser/', views.loginuser, name='loginuser'),
+    path('logutuse', views.logoutuser, name='logoutuser'),
 ]
+
+#regex google search.

@@ -1,84 +1,60 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, auth
-import razorpay
-from ircone.settings import RAZORPAY_API_KEY, RAZORPAY_API_SECRET_KEY
+from django.contrib.auth import authenticate, login, logout
+from .models import *
 
-
-client = razorpay.Client(auth=(RAZORPAY_API_KEY, RAZORPAY_API_SECRET_KEY))
 def home(request):
- return render(request, 'home.html')
+    datas = Resto.objects.all()
+    return render(request, 'index.html', {'datas':datas})
 
-def product_detail(request):
- return render(request, 'productdetail.html')
+def register_form(request):
+    return render(request, 'register.html')
 
-def add_to_cart(request):
-    if request.user.is_authenticated:
-        data = { "amount": 57000, "currency": "INR", "payment_capture":1 }
-        payment_order = client.order.create(data=data)
-        payment_order_id = payment_order['id']
-        context = {
-            'amount':570,
-            'api_key':RAZORPAY_API_KEY,
-            'order_id':payment_order_id,
-            'add' : True,
-        }
-        return render(request, 'addtocart.html', context)
-    else:
-        return render(request, 'login.html')
-
-def buy_now(request):
- return render(request, 'buynow.html')
-
-def profile(request):
- return render(request, 'profile.html')
-
-def address(request):
- return render(request, 'address.html')
-
-def orders(request):
- return render(request, 'orders.html')
-
-def change_password(request):
- return render(request, 'changepassword.html')
-
-def mobile(request):
- return render(request, 'mobile.html')
-
-def login(request):
- return render(request, 'login.html')
-
-def customerregistration(request):
- return render(request, 'customerregistration.html')
-
-def checkout(request):
- return render(request, 'checkout.html')
-
-def logout(request):
-    auth.logout(request)
-    return render(request, 'home.html')
-
-def remove(request):
- add = False
- return render(request, 'addtocart.html', {'add':add})
-
-def register(request):
-    email = request.POST['email']
-    password = request.POST['password']
-    username = request.POST['username']
-    first_name = request.POST['first_name']
-    last_name = request.POST['last_name']
-
-    user = User.objects.create_user(email=email, password=password, username=username,first_name=first_name,last_name=last_name)
-    user.save();
+def login_form(request):
     return render(request, 'login.html')
 
-def abc(request):
-    username = request.POST['username']
-    password = request.POST['password']
+def loginuser(request):
+    # code for login.
+    username = request.POST.get('user')
+    password = request.POST.get('pwd')
 
-    user = auth.authenticate(username=username,password=password)
-    if user is not None:
-        auth.login(request, user)
-        return render(request,'home.html')
+    u = authenticate(request, username=username, password=password)
+    if u is not None:
+        login(request, u)
+        return render(request, 'login.html', {'msg':'You have successfuly logged in!', 'error':False})
     else:
-        return render(request,'login.html',{'msg':"Invalid username or password! Please try again"})
+        return render(request, 'login.html', {'msg':'Login failed! Please try again.', 'error':True})
+
+def register(request):
+    # code for registation.
+    email = request.POST.get('email')
+    username = request.POST.get('username')
+    password1 = request.POST.get('pwd1')
+    password2 = request.POST.get('pwd2')
+
+    if password1==password2:
+        user = User(username=username, email=email, password=password1)
+        user.save()
+        return render(request, 'register.html', {'message':'Registered successuly!', 'error':False})
+    
+    else:
+        return render(request, 'register.html', {'message':"Password didn't match, please try again.", 'error':True})
+
+
+def restaurant(request, slug, name):
+        menu = item.objects.filter(hotel=name)
+        desc = Resto.objects.get(slug=slug)
+        com = Comments.objects.filter(hname=name)
+        return render(request, 'rest_info.html', {'desc':desc, 'menu':menu, 'com':com})
+
+def add_comment(request):
+    comment = request.POST.get('comment')
+    hname = request.POST.get('hname')
+    a = Comments(hname=hname, comment=comment)
+    a.save()
+    
+    return home
+
+def logoutuser(request):
+    logout(request)
+    return render(request, 'login.html')
