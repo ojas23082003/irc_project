@@ -29,9 +29,9 @@
             .catch(error => console.log(error))
     } catch (error) { console.log(error); };
 
-    const clock = document.querySelector("clock");
+    var clock = document.querySelector("clock");
     setInterval(() => {
-        const date = new Date();
+        var date = new Date();
         clock.innerHTML = date.getHour() + ":" + date.getMinute() + ":" + date.getSecond();
     }, 1000);
 
