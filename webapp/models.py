@@ -36,3 +36,6 @@ class item(models.Model):
 class Comments(models.Model):
     hname = models.CharField(max_length=250)
     comment = models.CharField(max_length=1000)
+
+class Dataa(models.Model):
+    name = models.CharField(max_length=100)

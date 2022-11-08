@@ -7,6 +7,13 @@ def home(request):
     datas = Resto.objects.all()
     return render(request, 'index.html', {'datas':datas})
 
+def add_data(request):
+    a = request.POST.get('name')
+    a = Dataa(name=a)
+    a.save()
+    datas = Resto.objects.all()
+    return render(request, 'index.html', {'datas':datas})
+
 def register_form(request):
     return render(request, 'register.html')
 
@@ -52,8 +59,8 @@ def add_comment(request):
     hname = request.POST.get('hname')
     a = Comments(hname=hname, comment=comment)
     a.save()
-    
-    return home
+    datas = Resto.objects.all()
+    return render(request, 'index.html', {'datas':datas})
 
 def logoutuser(request):
     logout(request)

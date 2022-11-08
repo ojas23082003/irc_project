@@ -15,6 +15,8 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('loginuser/', views.loginuser, name='loginuser'),
     path('logutuse', views.logoutuser, name='logoutuser'),
+    path('add_data', views.add_data, name='add_data'),
+    path('add_comment', views.add_comment, name='add_comment'),
 ]
 
 #regex google search.
